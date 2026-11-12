@@ -1,0 +1,29 @@
+{
+  // Use workspace TypeScript (monorepo) — VS Code will prompt to use it
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  // Enable TS for both apps
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+
+  // ESLint — auto detect working directories (monorepo)
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // Tailwind CSS IntelliSense (v4) — works for apps/web
+  "tailwindCSS.experimental.configFile": "apps/web/tailwind.config.js",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  // Prisma
+  "prisma.showPrismaDataPlatformNotification": false,
+
+  // General editor LSP hints
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "css.lint.unknownAtRules": "ignore"
+}

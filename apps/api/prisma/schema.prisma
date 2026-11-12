@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Warga {
+  id                 Int      @id @default(autoincrement())
+  nama               String
+  nik                String   @unique
+  email              String?
+  nomorKk            String?  @unique
+  namaKk             String?
+  tempatLahir        String?
+  tanggalLahir       String?
+  jenisKelamin       String?
+  golonganDarah      String?
+  agama              String?
+  statusPerkawinan   String?
+  statusKeluarga     String?
+  kewarganegaraan    String?
+  pendidikan         String?
+  pekerjaan          String?
+  nomorHp            String?
+  alamat             String?
+  desa               String?
+  rt                 String?
+  rw                 String?
+  kecamatan          String?
+  kabupaten          String?
+  provinsi           String?
+  statusKependudukan String?
+  statusTinggal      String?
+  statusWarga        String?
+  disabilitas        String?
+  bantuanSosial      String?
+  keterangan         String?
+  registeredBy       String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Admin {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  email         String   @unique
+  passwordHash  String
+  role          String   @default("super_admin")
+  isActive      Boolean  @default(true)
+  failedLogins  Int      @default(0)
+  lockedUntil   DateTime?
+  mustChangePwd Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sessions Session[]
+}
+
+model Petugas {
+  id            Int      @id @default(autoincrement())
+  nama          String
+  email         String   @unique
+  pinHash       String
+  role          String   @default("petugas")
+  isActive      Boolean  @default(true)
+  lastLoginAt   DateTime?
+  failedLogins  Int      @default(0)
+  lockedUntil   DateTime?
+  mustChangePin Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sessions Session[]
+}
+
+/// Sesi login aktif. Setiap pasangan token access & refresh terikat ke satu baris di sini.
+/// Mencabut / menghapus baris ini langsung mematikan semua token yang terkait.
+model Session {
+  id               String    @id @default(uuid())
+  refreshTokenHash String    @unique
+  ipAddress        String?
+  userAgent        String?
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  lastUsedAt       DateTime  @default(now())
+
+  petugasId Int?
+  petugas   Petugas? @relation(fields: [petugasId], references: [id], onDelete: Cascade)
+  adminId    Int?
+  admin      Admin?    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([petugasId])
+  @@index([adminId])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  actorEmail String
+  actorRole  String
+  action     String
+  entity     String
+  entityId   String?
+  detail     String?
+  outcome    String   @default("SUCCESS")
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([actorEmail, createdAt])
+  @@index([action, createdAt])
+  @@index([outcome, createdAt])
+}

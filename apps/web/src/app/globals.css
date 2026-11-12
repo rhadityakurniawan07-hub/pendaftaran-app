@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-border-glow: border-glow 2s ease-in-out infinite;
+  --animate-stripe: stripe 1s linear infinite;
+  --animate-stripe-reverse: stripe-reverse 1s linear infinite;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+  --animate-pulse-fast: pulse-fast 0.8s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-shake: shake 0.5s ease-in-out;
+  --keyframes-slide-up: {
+    "0%": { opacity: "0", transform: "translateY(20px)" },
+    "100%": { opacity: "1", transform: "translateY(0)" },
+  };
+  --keyframes-fade-in: {
+    "0%": { opacity: "0", transform: "translateY(10px)" },
+    "100%": { opacity: "1", transform: "translateY(0)" },
+  };
+  --keyframes-border-glow: {
+    "0%, 100%": { boxShadow: "0 0 20px rgba(251, 191, 36, 0.3), 0 0 40px rgba(239, 68, 68, 0.2)" },
+    "50%": { boxShadow: "0 0 40px rgba(251, 191, 36, 0.5), 0 0 80px rgba(239, 68, 68, 0.4)" },
+  };
+  --keyframes-stripe: {
+    "0%": { backgroundPosition: "0% 50%" },
+    "100%": { backgroundPosition: "200% 50%" },
+  };
+  --keyframes-stripe-reverse: {
+    "0%": { backgroundPosition: "200% 50%" },
+    "100%": { backgroundPosition: "0% 50%" },
+  };
+  --keyframes-pulse-slow: {
+    "0%, 100%": { opacity: "0.4" },
+    "50%": { opacity: "0.8" },
+  };
+  --keyframes-pulse-fast: {
+    "0%, 100%": { opacity: "1" },
+    "50%": { opacity: "0.5" },
+  };
+  --keyframes-shimmer: {
+    "0%": { backgroundPosition: "-200% 0" },
+    "100%": { backgroundPosition: "200% 0" },
+  };
+  --keyframes-shake: {
+    "0%, 100%": { transform: "translateX(0)" },
+    "20%, 60%": { transform: "translateX(-4px)" },
+    "40%, 80%": { transform: "translateX(4px)" },
+  };
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
